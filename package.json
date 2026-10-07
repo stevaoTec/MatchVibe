@@ -1,0 +1,10 @@
+{
+  "name": "matchvibe-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "install": "npm install --prefix client && npm install --prefix server",
+    "build": "npm run build --prefix client && npm run build --prefix server && cd server && npx prisma generate && npx prisma db push --accept-data-loss",
+    "start": "npm start --prefix server"
+  }
+}

@@ -1,0 +1,87 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../data/matchvibe.db"
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  password     String
+  name         String
+  bio          String?  @default("")
+  cpf          String?  @default("")
+  age          Int?     @default(18)
+  gender       String?  @default("")
+  profilePhoto String?  @default("")
+  coverPhoto   String?  @default("")
+  photos       String?  @default("[]")
+  interests    String?  @default("[]")
+  verified     Int?     @default(0)
+  googleId     String?  @default("")
+  latitude           Float?
+  longitude          Float?
+  maxDistance        Int?     @default(50)
+  minAge             Int?     @default(18)
+  maxAge             Int?     @default(100)
+  genderPreference   String?  @default("Todos")
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  swipesGiven    Swipe[]   @relation("SwipesGiven")
+  swipesReceived Swipe[]   @relation("SwipesReceived")
+  matches1       Match[]   @relation("User1Matches")
+  matches2       Match[]   @relation("User2Matches")
+  messagesSent   Message[] @relation("MessagesSent")
+  
+  @@map("users")
+}
+
+model Swipe {
+  id         Int      @id @default(autoincrement())
+  swiperId   Int
+  swipedId   Int
+  direction  String
+  createdAt  DateTime @default(now())
+
+  swiper User @relation("SwipesGiven", fields: [swiperId], references: [id])
+  swiped User @relation("SwipesReceived", fields: [swipedId], references: [id])
+
+  @@unique([swiperId, swipedId])
+  @@map("swipes")
+}
+
+model Match {
+  id        Int      @id @default(autoincrement())
+  user1Id   Int
+  user2Id   Int
+  isSuper   Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user1    User      @relation("User1Matches", fields: [user1Id], references: [id])
+  user2    User      @relation("User2Matches", fields: [user2Id], references: [id])
+  messages Message[]
+
+  @@unique([user1Id, user2Id])
+  @@map("matches")
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  matchId   Int
+  senderId  Int
+  content   String
+  read      Int      @default(0)
+  createdAt DateTime @default(now())
+
+  match  Match @relation(fields: [matchId], references: [id])
+  sender User  @relation("MessagesSent", fields: [senderId], references: [id])
+
+  @@map("messages")
+}

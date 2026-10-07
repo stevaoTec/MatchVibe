@@ -1,0 +1,249 @@
+.swipe-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  will-change: transform;
+  user-select: none;
+  touch-action: none;
+  z-index: 2;
+}
+
+.swipe-card.behind {
+  z-index: 1;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.swipe-card.dragging {
+  box-shadow: var(--shadow-xl);
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  transition: background-image 0.3s ease-in-out;
+}
+
+.card-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--secondary-gradient);
+}
+
+.card-image-placeholder span {
+  font-size: 72px;
+  font-weight: 700;
+  color: white;
+  text-transform: uppercase;
+}
+
+.card-nav-area {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  z-index: 5;
+}
+
+.card-nav-left { left: 0; }
+.card-nav-right { right: 0; }
+
+.card-indicators {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  gap: 4px;
+  z-index: 10;
+}
+
+.indicator {
+  flex: 1;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: var(--radius-full);
+  transition: all 0.2s;
+}
+
+.indicator.active {
+  background: white;
+}
+
+.card-gradient-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 55%;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0) 100%);
+  pointer-events: none;
+}
+
+.card-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24px;
+  color: white;
+  pointer-events: none;
+  z-index: 6;
+}
+
+.card-name-row {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 4px;
+  gap: 10px;
+}
+
+.card-name-row h2 {
+  font-size: 28px;
+  font-weight: 700;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+.card-age {
+  font-size: 22px;
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+.verified-badge {
+  color: #3b82f6;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+.verified-badge svg {
+  width: 14px;
+  height: 14px;
+}
+
+.card-distance {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  opacity: 0.8;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.card-distance svg {
+  width: 14px;
+  height: 14px;
+  opacity: 0.8;
+}
+
+.card-bio {
+  font-size: 14px;
+  opacity: 0.9;
+  line-height: 1.4;
+  margin-bottom: 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-interests {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.interest-tag {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+}
+
+.interest-tag.shared {
+  background: var(--primary-gradient);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 8px rgba(232, 87, 109, 0.3);
+}
+
+.shared-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary-gradient);
+  color: white;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(232, 87, 109, 0.3);
+  z-index: 20;
+  border: 2px solid white;
+  white-space: nowrap;
+}
+
+.shared-badge svg {
+  width: 14px;
+  height: 14px;
+}
+
+.swipe-stamp {
+  position: absolute;
+  top: 60px;
+  padding: 6px 14px;
+  border-radius: var(--radius-xs);
+  font-size: 32px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.like-stamp {
+  left: 24px;
+  color: var(--success);
+  border: 3px solid var(--success);
+  transform: rotate(-15deg);
+  box-shadow: 0 0 16px rgba(34, 197, 94, 0.15);
+}
+
+.dislike-stamp {
+  right: 24px;
+  color: var(--danger);
+  border: 3px solid var(--danger);
+  transform: rotate(15deg);
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.15);
+}
+
+.card-behind .card-image {
+  filter: brightness(0.97);
+}
