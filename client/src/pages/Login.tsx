@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import * as api from '../services/api';
+import { GoogleLogin } from '@react-oauth/google';
 import '../styles/auth.css';
 
 export default function Login() {
@@ -28,11 +29,11 @@ export default function Login() {
     }
   };
 
-  const handleGoogleLogin = async (response: any) => {
+  const handleGoogleSuccess = async (credentialResponse: any) => {
     setError('');
     setLoading(true);
     try {
-      const { token, user } = await api.googleLogin(response.credential);
+      const { token, user } = await api.googleLogin(credentialResponse.credential);
       login(token, user);
       navigate('/');
     } catch (err: any) {
@@ -41,30 +42,6 @@ export default function Login() {
       setLoading(false);
     }
   };
-
-  // Initialize Google Sign-In
-  React.useEffect(() => {
-    const initGoogle = () => {
-      if ((window as any).google?.accounts?.id) {
-        (window as any).google.accounts.id.initialize({
-          client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID || '',
-          callback: handleGoogleLogin,
-        });
-        (window as any).google.accounts.id.renderButton(
-          document.getElementById('google-signin-btn-login'),
-          { theme: 'outline', size: 'large', width: '100%', text: 'continue_with', shape: 'rectangular' }
-        );
-      }
-    };
-    
-    // Try immediately or wait for script to load
-    if ((window as any).google?.accounts?.id) {
-      initGoogle();
-    } else {
-      const timer = setTimeout(initGoogle, 1000);
-      return () => clearTimeout(timer);
-    }
-  }, []);
 
   return (
     <div className="auth-page">
@@ -84,7 +61,16 @@ export default function Login() {
           <p>Encontre pessoas incriveis</p>
         </div>
 
-        <div id="google-signin-btn-login" style={{ marginBottom: 8 }}></div>
+        <div className="google-auth-wrapper">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={() => setError('Falha na autenticação do Google')}
+            theme="outline"
+            size="large"
+            text="continue_with"
+            width="100%"
+          />
+        </div>
 
         <div className="auth-divider">ou</div>
 

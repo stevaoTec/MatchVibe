@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import * as api from '../services/api';
+import { GoogleLogin } from '@react-oauth/google';
 import '../styles/auth.css';
 
 function formatCPF(value: string): string {
@@ -63,6 +64,11 @@ export default function Register() {
       return;
     }
 
+    if (parseInt(age) < 18) {
+      setError('Voce deve ter pelo menos 18 anos para se cadastrar.');
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -83,11 +89,11 @@ export default function Register() {
     }
   };
 
-  const handleGoogleLogin = async (response: any) => {
+  const handleGoogleSuccess = async (credentialResponse: any) => {
     setError('');
     setLoading(true);
     try {
-      const { token, user } = await api.googleLogin(response.credential);
+      const { token, user } = await api.googleLogin(credentialResponse.credential);
       login(token, user);
       navigate('/');
     } catch (err: any) {
@@ -96,28 +102,6 @@ export default function Register() {
       setLoading(false);
     }
   };
-
-  React.useEffect(() => {
-    const initGoogle = () => {
-      if ((window as any).google?.accounts?.id) {
-        (window as any).google.accounts.id.initialize({
-          client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID || '',
-          callback: handleGoogleLogin,
-        });
-        (window as any).google.accounts.id.renderButton(
-          document.getElementById('google-signin-btn-register'),
-          { theme: 'outline', size: 'large', width: '100%', text: 'signup_with', shape: 'rectangular' }
-        );
-      }
-    };
-
-    if ((window as any).google?.accounts?.id) {
-      initGoogle();
-    } else {
-      const timer = setTimeout(initGoogle, 1000);
-      return () => clearTimeout(timer);
-    }
-  }, []);
 
   return (
     <div className="auth-page">
@@ -137,7 +121,16 @@ export default function Register() {
           <p>Crie sua conta</p>
         </div>
 
-        <div id="google-signin-btn-register" style={{ marginBottom: 8 }}></div>
+        <div className="google-auth-wrapper">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={() => setError('Falha na autenticação do Google')}
+            theme="outline"
+            size="large"
+            text="signup_with"
+            width="100%"
+          />
+        </div>
 
         <div className="auth-divider">ou</div>
 

@@ -33,7 +33,7 @@ const registerSchema = z.object({
   password: z.string().min(6, 'A senha deve ter pelo menos 6 caracteres'),
   name: z.string().min(2, 'O nome e obrigatorio e deve ter mais de 1 caractere'),
   cpf: z.string().refine(validateCPF, 'CPF invalido'),
-  age: z.number().optional().default(18),
+  age: z.number().min(18, 'Voce deve ter pelo menos 18 anos para se cadastrar').default(18),
   gender: z.string().optional().default('')
 });
 
@@ -66,7 +66,6 @@ router.post('/register', async (req: Request, res: Response) => {
     }
 
     const hashedPassword = bcrypt.hashSync(password, 10);
-    const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(name)}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf`;
 
     const user = await prisma.user.create({
       data: {
@@ -76,8 +75,8 @@ router.post('/register', async (req: Request, res: Response) => {
         cpf: cleanCpf,
         age,
         gender,
-        profilePhoto: avatarUrl,
-        photos: JSON.stringify([avatarUrl]),
+        profilePhoto: '',
+        photos: JSON.stringify([]),
         interests: JSON.stringify([]),
         verified: 0
       }
