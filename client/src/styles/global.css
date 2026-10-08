@@ -1,33 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-  /* Premium Dark Neon Theme */
-  --bg-main: #09090b;
-  --bg-card: rgba(24, 24, 27, 0.6);
-  --bg-card-hover: rgba(39, 39, 42, 0.8);
-  --bg-elevated: rgba(24, 24, 27, 0.85);
-  --bg-input: rgba(39, 39, 42, 0.5);
+  /* Premium Clean White Theme */
+  --bg-main: #f8fafc;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-card-hover: #ffffff;
+  --bg-elevated: rgba(255, 255, 255, 0.95);
+  --bg-input: #f1f5f9;
 
-  /* Primary - Neon Pink */
-  --primary: #f43f5e;
-  --primary-hover: #fb7185;
-  --primary-light: rgba(244, 63, 94, 0.15);
-  --primary-gradient: linear-gradient(135deg, #f43f5e 0%, #ff1b6b 100%);
-  --primary-glow: 0 0 20px rgba(244, 63, 94, 0.5);
+  /* Primary - Vivid Pink/Red (Tinder-like but elegant) */
+  --primary: #ff4b4b;
+  --primary-hover: #ff2d2d;
+  --primary-light: rgba(255, 75, 75, 0.1);
+  --primary-gradient: linear-gradient(135deg, #ff4b4b 0%, #ff7eb3 100%);
+  --primary-glow: 0 4px 15px rgba(255, 75, 75, 0.3);
 
-  /* Secondary - Neon Cyan */
-  --secondary: #06b6d4;
-  --secondary-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
-  --secondary-glow: 0 0 20px rgba(6, 182, 212, 0.5);
+  /* Secondary - Soft Blue */
+  --secondary: #3b82f6;
+  --secondary-gradient: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+  --secondary-glow: 0 4px 15px rgba(59, 130, 246, 0.3);
 
-  /* Super Vibe - Neon Purple */
+  /* Super Vibe - Premium Gold/Purple */
   --super-gradient: linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%);
-  --super-glow: 0 0 25px rgba(139, 92, 246, 0.6);
+  --super-glow: 0 4px 15px rgba(139, 92, 246, 0.3);
 
-  /* Text */
-  --text-main: #f8fafc;
-  --text-secondary: #cbd5e1;
-  --text-muted: #64748b;
+  /* Text - Dark and Clean */
+  --text-main: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
   --text-on-primary: #ffffff;
 
   /* Status */
@@ -48,17 +48,17 @@
   --radius-xl: 32px;
   --radius-full: 9999px;
 
-  /* Shadows - Neon & Deep */
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.5);
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.5);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.6);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.8);
-  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.9);
-  --shadow-primary: 0 8px 24px rgba(244, 63, 94, 0.3);
+  /* Shadows - Soft & Clean */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.15);
+  --shadow-primary: 0 8px 24px rgba(255, 75, 75, 0.25);
 
-  /* Borders - Glassmorphism */
-  --border-color: rgba(255, 255, 255, 0.08);
-  --border-color-light: rgba(255, 255, 255, 0.12);
+  /* Borders - Soft */
+  --border-color: rgba(0, 0, 0, 0.06);
+  --border-color-light: rgba(0, 0, 0, 0.03);
 
   /* Typography */
   --font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -74,8 +74,8 @@ body {
   font-family: var(--font-family);
   background-color: var(--bg-main);
   background-image: 
-    radial-gradient(circle at 15% 50%, rgba(244, 63, 94, 0.05), transparent 25%),
-    radial-gradient(circle at 85% 30%, rgba(6, 182, 212, 0.05), transparent 25%);
+    radial-gradient(circle at 15% 50%, rgba(255, 75, 75, 0.03), transparent 30%),
+    radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.03), transparent 30%);
   color: var(--text-main);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -101,11 +101,12 @@ body {
 /* Glassmorphism Utilities */
 .glass-panel {
   background: var(--bg-card);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border-color);
-  border-top: 1px solid rgba(255,255,255,0.15);
-  border-left: 1px solid rgba(255,255,255,0.15);
+  border-top: 1px solid rgba(255,255,255,0.8);
+  border-left: 1px solid rgba(255,255,255,0.8);
+  box-shadow: var(--shadow-sm);
 }
 
 /* Scrollbar */
@@ -149,8 +150,8 @@ input, textarea, select {
 input:focus, textarea:focus, select:focus {
   outline: none;
   border-color: var(--primary);
-  background: rgba(39, 39, 42, 0.8);
-  box-shadow: 0 0 15px rgba(244, 63, 94, 0.2);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px var(--primary-light);
 }
 
 input::placeholder, textarea::placeholder {
