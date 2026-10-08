@@ -19,6 +19,8 @@ export default function Profile() {
   const [mbti, setMbti] = useState(user?.mbti || '');
   const [instagram, setInstagram] = useState(user?.instagram || '');
   const [spotify, setSpotify] = useState(user?.spotify || '');
+  const [favoritePlace, setFavoritePlace] = useState(user?.favoritePlace || '');
+  const [currentEvent, setCurrentEvent] = useState(user?.currentEvent || '');
   const [interests, setInterests] = useState<string[]>(user?.interests || []);
   const [newInterest, setNewInterest] = useState('');
   const [saving, setSaving] = useState(false);
@@ -47,6 +49,8 @@ export default function Profile() {
         mbti,
         instagram,
         spotify,
+        favoritePlace,
+        currentEvent,
         interests
       } as any);
       updateUser(updated);
@@ -191,6 +195,9 @@ export default function Profile() {
             }}
           />
         </div>
+        <div className="vibe-score-badge">
+          🔥 Vibe Score: {user?.vibeScore || 0}
+        </div>
       </div>
 
       <div className="profile-completion">
@@ -316,6 +323,16 @@ export default function Profile() {
               <option value="Ainda não sei">Ainda não sei</option>
             </select>
           </div>
+        </div>
+
+        <span className="profile-section-title">Vida Real (Eventos e Locais)</span>
+        <div className="input-group">
+          <label>Check-in de Evento/Festa de Hoje</label>
+          <input type="text" placeholder="Ex: Calourada, Lollapalooza..." value={currentEvent} onChange={e => setCurrentEvent(e.target.value)} />
+        </div>
+        <div className="input-group">
+          <label>Lugar Favorito da Cidade</label>
+          <input type="text" placeholder="Ex: Starbucks da Paulista" value={favoritePlace} onChange={e => setFavoritePlace(e.target.value)} />
         </div>
 
         <span className="profile-section-title">Redes Sociais</span>

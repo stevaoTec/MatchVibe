@@ -95,6 +95,11 @@ router.post('/:matchId', authenticateToken, async (req: AuthRequest, res: Respon
       }
     });
 
+    await prisma.user.update({
+      where: { id: userId },
+      data: { vibeScore: { increment: 2 } }
+    });
+
     const mappedMessage = {
       id: newMessage.id,
       content: newMessage.content,

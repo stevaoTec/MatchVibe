@@ -17,6 +17,8 @@ export default function Home() {
   const [showMatch, setShowMatch] = useState(false);
   const [locationError, setLocationError] = useState<string | null>(null);
   const [hasSwiped, setHasSwiped] = useState(false);
+  const [showPremiumAlert, setShowPremiumAlert] = useState(false);
+  const [showBlindDate, setShowBlindDate] = useState(false);
   const { socket } = useSocket();
 
   const loadUsers = useCallback(async () => {
@@ -164,6 +166,15 @@ export default function Home() {
 
   return (
     <div className="home-page">
+      <div className="home-top-bar">
+        <button className="top-bar-btn gold-btn" onClick={() => setShowPremiumAlert(true)}>
+          <span className="btn-icon">✨</span> Quem me curtiu
+        </button>
+        <button className="top-bar-btn blind-date-btn" onClick={() => setShowBlindDate(true)}>
+          <span className="btn-icon">🎭</span> Roleta Cega
+        </button>
+      </div>
+
       <div className="swipe-container">
         {locationError && (
           <div style={{ position: 'absolute', top: -30, width: '100%', textAlign: 'center', color: 'var(--text-muted)', fontSize: 12 }}>
@@ -252,6 +263,41 @@ export default function Home() {
           user={matchUser}
           onClose={() => setShowMatch(false)}
         />
+      )}
+
+      {showPremiumAlert && (
+        <div className="premium-modal-overlay">
+          <div className="premium-modal">
+            <h2>✨ Descubra Quem te Curtiu</h2>
+            <p>Para ver a lista completa de pessoas que curtiram você, assista a um anúncio ou convide um amigo!</p>
+            <div className="premium-buttons">
+              <button className="invite-btn" onClick={() => {
+                toast.success('Link de convite copiado!');
+                setShowPremiumAlert(false);
+              }}>Copiar Link de Convite</button>
+              <button className="close-btn" onClick={() => setShowPremiumAlert(false)}>Agora não</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showBlindDate && (
+        <div className="premium-modal-overlay">
+          <div className="premium-modal blind-date-modal">
+            <h2>🎭 Roleta Cega</h2>
+            <p>Conecte-se com alguém apenas pela personalidade! Sem fotos, apenas chat por 3 minutos. Se rolar química, as fotos são reveladas.</p>
+            <div className="premium-buttons">
+              <button className="invite-btn" onClick={() => {
+                toast('Procurando um par perfeito...', { icon: '🔍' });
+                setTimeout(() => {
+                  toast.error('Nenhum usuário online para a Roleta Cega no momento.');
+                  setShowBlindDate(false);
+                }, 3000);
+              }}>Encontrar Par</button>
+              <button className="close-btn" onClick={() => setShowBlindDate(false)}>Voltar</button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

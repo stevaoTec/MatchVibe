@@ -24,6 +24,9 @@ export interface User {
   mbti?: string;
   instagram?: string;
   spotify?: string;
+  vibeScore?: number;
+  favoritePlace?: string;
+  currentEvent?: string;
   createdAt?: string;
 }
 

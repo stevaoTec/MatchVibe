@@ -161,7 +161,20 @@ export default function SwipeCard({ user, onSwipe, isBehind }: SwipeCardProps) {
             A {user.distance} km de voce
           </div>
         )}
+
+        {(user.currentEvent || user.favoritePlace) && (
+          <div className="card-event-badge">
+            <span className="event-icon">📍</span>
+            {user.currentEvent || user.favoritePlace}
+          </div>
+        )}
         
+        {user.vibeScore !== undefined && (
+          <div className="card-vibe-score">
+            🔥 Vibe Score: {user.vibeScore}
+          </div>
+        )}
+
         {user.bio && <p className="card-bio">{user.bio}</p>}
         
         {user.interests && user.interests.length > 0 && (

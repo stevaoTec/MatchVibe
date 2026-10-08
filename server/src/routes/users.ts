@@ -70,7 +70,9 @@ const profileSchema = z.object({
   height: z.number().optional(),
   mbti: z.string().optional(),
   instagram: z.string().optional(),
-  spotify: z.string().optional()
+  spotify: z.string().optional(),
+  favoritePlace: z.string().optional(),
+  currentEvent: z.string().optional()
 });
 
 // GET /api/users/discover - Get users for swiping with Affinity and Real Location
@@ -116,7 +118,8 @@ router.get('/discover', authenticateToken, async (req: AuthRequest, res: Respons
         id: true, name: true, bio: true, age: true, gender: true,
         profilePhoto: true, coverPhoto: true, photos: true, interests: true,
         verified: true, latitude: true, longitude: true,
-        relationshipIntent: true, zodiacSign: true, height: true, mbti: true, instagram: true, spotify: true
+        relationshipIntent: true, zodiacSign: true, height: true, mbti: true, 
+        instagram: true, spotify: true, vibeScore: true, favoritePlace: true, currentEvent: true
       }
     });
 
@@ -151,6 +154,9 @@ router.get('/discover', authenticateToken, async (req: AuthRequest, res: Respons
         mbti: u.mbti,
         instagram: u.instagram,
         spotify: u.spotify,
+        vibeScore: u.vibeScore,
+        favoritePlace: u.favoritePlace,
+        currentEvent: u.currentEvent,
         affinityScore,
         distance
       };
