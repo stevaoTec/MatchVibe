@@ -176,6 +176,15 @@ export default function SwipeCard({ user, onSwipe, isBehind }: SwipeCardProps) {
         )}
 
         {user.bio && <p className="card-bio">{user.bio}</p>}
+
+        <div className="card-traits">
+          {user.height && <span className="trait-badge">📏 {user.height} cm</span>}
+          {user.zodiacSign && <span className="trait-badge">♈ {user.zodiacSign}</span>}
+          {user.mbti && <span className="trait-badge">🧠 {user.mbti}</span>}
+          {user.relationshipIntent && <span className="trait-badge">💘 {user.relationshipIntent}</span>}
+          {user.instagram && <span className="trait-badge">📸 @{user.instagram.replace('@', '')}</span>}
+          {user.spotify && <span className="trait-badge">🎧 Spotify</span>}
+        </div>
         
         {user.interests && user.interests.length > 0 && (
           <div className="card-interests">
