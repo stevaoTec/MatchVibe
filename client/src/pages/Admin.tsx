@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { api } from '../utils/api';
+import * as api from '../services/api';
 import './Admin.css';
 
 interface AdminStats {
@@ -24,8 +24,8 @@ export default function Admin() {
 
     const fetchStats = async () => {
       try {
-        const res = await api.get('/users/admin/stats');
-        setStats(res.data);
+        const res = await api.getAdminStats();
+        setStats(res);
       } catch (err: any) {
         setError('Erro ao carregar estatísticas.');
       } finally {

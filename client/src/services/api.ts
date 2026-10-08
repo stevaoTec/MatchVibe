@@ -59,6 +59,11 @@ export async function discoverUsers(): Promise<User[]> {
   return handleResponse<User[]>(res);
 }
 
+export async function getAdminStats(): Promise<{ totalUsers: number; onlineUsers: number }> {
+  const res = await fetch(`${API_URL}/users/admin/stats`, { headers: getHeaders() });
+  return handleResponse(res);
+}
+
 export async function updateProfile(data: Partial<User>): Promise<User> {
   const res = await fetch(`${API_URL}/users/profile`, {
     method: 'PUT',
