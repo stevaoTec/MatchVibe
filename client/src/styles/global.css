@@ -209,7 +209,7 @@ input::placeholder, textarea::placeholder {
 /* Media Queries */
 @media (max-width: 768px) {
   .main-content {
-    padding-top: 0;
+    padding-top: var(--nav-height);
     padding-bottom: var(--mobile-nav-height);
   }
 }

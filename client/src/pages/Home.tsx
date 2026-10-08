@@ -5,6 +5,7 @@ import { useSocket } from '../context/SocketContext';
 import SwipeCard from '../components/SwipeCard/SwipeCard';
 import MatchModal from '../components/MatchModal/MatchModal';
 import toast from 'react-hot-toast';
+import confetti from 'canvas-confetti';
 import '../styles/home.css';
 import '../styles/skeleton.css';
 
@@ -65,6 +66,16 @@ export default function Home() {
     socket.on('match_notification', (match: any) => {
       setMatchUser(match.user);
       setShowMatch(true);
+      
+      // Haptic and Confetti!
+      if ('vibrate' in navigator) navigator.vibrate([100, 50, 100]);
+      confetti({
+        particleCount: 150,
+        spread: 80,
+        origin: { y: 0.6 },
+        colors: ['#3b82f6', '#10b981', '#ec4899', '#f59e0b']
+      });
+
       toast.success(`Voce deu Match com ${match.user.name}!`, {
         duration: 5000,
       });
@@ -85,6 +96,15 @@ export default function Home() {
       if (result.match) {
         setMatchUser(result.match.user);
         setShowMatch(true);
+
+        // Haptic and Confetti!
+        if ('vibrate' in navigator) navigator.vibrate([100, 50, 100]);
+        confetti({
+          particleCount: 150,
+          spread: 80,
+          origin: { y: 0.6 },
+          colors: ['#3b82f6', '#10b981', '#ec4899', '#f59e0b']
+        });
 
         if (socket) {
           socket.emit('new_match', {

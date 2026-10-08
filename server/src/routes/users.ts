@@ -64,7 +64,13 @@ const profileSchema = z.object({
   maxDistance: z.number().optional(),
   minAge: z.number().optional(),
   maxAge: z.number().optional(),
-  genderPreference: z.string().optional()
+  genderPreference: z.string().optional(),
+  relationshipIntent: z.string().optional(),
+  zodiacSign: z.string().optional(),
+  height: z.number().optional(),
+  mbti: z.string().optional(),
+  instagram: z.string().optional(),
+  spotify: z.string().optional()
 });
 
 // GET /api/users/discover - Get users for swiping with Affinity and Real Location
@@ -102,12 +108,15 @@ router.get('/discover', authenticateToken, async (req: AuthRequest, res: Respons
       where: {
         id: { notIn: swipedIds },
         age: { gte: minAge, lte: maxAge },
+        profilePhoto: { not: '' },
+        name: { not: '' },
         ...(genderPreference !== 'Todos' ? { gender: genderPreference } : {})
       },
       select: {
         id: true, name: true, bio: true, age: true, gender: true,
         profilePhoto: true, coverPhoto: true, photos: true, interests: true,
-        verified: true, latitude: true, longitude: true
+        verified: true, latitude: true, longitude: true,
+        relationshipIntent: true, zodiacSign: true, height: true, mbti: true, instagram: true, spotify: true
       }
     });
 
@@ -136,6 +145,12 @@ router.get('/discover', authenticateToken, async (req: AuthRequest, res: Respons
         photos,
         interests: userInterests,
         verified: Boolean(u.verified),
+        relationshipIntent: u.relationshipIntent,
+        zodiacSign: u.zodiacSign,
+        height: u.height,
+        mbti: u.mbti,
+        instagram: u.instagram,
+        spotify: u.spotify,
         affinityScore,
         distance
       };
@@ -248,6 +263,28 @@ router.post('/profile/cover', authenticateToken, upload.single('coverPhoto'), as
   }
 });
 
+// GET /api/users/admin/stats
+router.get('/admin/stats', authenticateToken, async (req: AuthRequest, res: Response) => {
+  try {
+    const userId = req.userId as number;
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (user?.email !== 'steven35silva@gmail.com') {
+      return res.status(403).json({ error: 'Acesso negado' });
+    }
+    
+    const totalUsers = await prisma.user.count();
+    const { getOnlineUsersCount } = require('../socket/chat');
+    
+    res.json({ 
+      totalUsers, 
+      onlineUsers: getOnlineUsersCount() 
+    });
+  } catch (err) {
+    console.error('Admin stats error:', err);
+    res.status(500).json({ error: 'Erro ao buscar estatísticas' });
+  }
+});
+
 // GET /api/users/:id - Get user by ID
 router.get('/:id', authenticateToken, async (req: AuthRequest, res: Response) => {
   try {
@@ -256,7 +293,8 @@ router.get('/:id', authenticateToken, async (req: AuthRequest, res: Response) =>
       select: {
         id: true, name: true, bio: true, age: true, gender: true,
         profilePhoto: true, coverPhoto: true, photos: true, interests: true,
-        verified: true, maxDistance: true
+        verified: true, maxDistance: true,
+        relationshipIntent: true, zodiacSign: true, height: true, mbti: true, instagram: true, spotify: true
       }
     });
 

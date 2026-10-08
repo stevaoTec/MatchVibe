@@ -4,6 +4,8 @@ import { JWT_SECRET } from '../middleware/auth';
 
 const onlineUsers = new Map<number, string>();
 
+export const getOnlineUsersCount = () => onlineUsers.size;
+
 export function setupSocket(io: Server): void {
   // Authentication middleware for Socket.io
   io.use((socket, next) => {

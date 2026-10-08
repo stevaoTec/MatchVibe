@@ -18,6 +18,12 @@ export interface User {
   minAge?: number;
   maxAge?: number;
   genderPreference?: string;
+  relationshipIntent?: string;
+  zodiacSign?: string;
+  height?: number;
+  mbti?: string;
+  instagram?: string;
+  spotify?: string;
   createdAt?: string;
 }
 

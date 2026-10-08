@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Matches from './pages/Matches';
 import Chat from './pages/Chat';
+import Admin from './pages/Admin';
 import Navbar from './components/Navbar/Navbar';
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
@@ -67,6 +68,7 @@ function AppRoutes() {
           <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
           <Route path="/matches" element={<PrivateRoute><Matches /></PrivateRoute>} />
           <Route path="/chat/:matchId" element={<PrivateRoute><Chat /></PrivateRoute>} />
+          <Route path="/admin" element={<PrivateRoute><Admin /></PrivateRoute>} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </main>

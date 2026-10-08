@@ -240,13 +240,25 @@ export default function Chat() {
       <div className="chat-messages">
         {messages.length === 0 && (
           <div className="chat-empty">
-            <div className="chat-empty-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
-              </svg>
+            <div className="wingman-badge">🤖 VibeMaker Wingman</div>
+            <h3>Quebre o gelo com {matchInfo?.name}!</h3>
+            <p>Escolha uma sugestão inteligente:</p>
+            
+            <div className="icebreakers-list">
+              {[
+                `Oi ${matchInfo?.name.split(' ')[0]}! Vi seu perfil e achei sua vibe muito massa. Qual seu lugar favorito por aqui?`,
+                `Parece que temos coisas em comum! O que você mais gosta de fazer num fim de semana perfeito?`,
+                `Pergunta polêmica: se você tivesse que ouvir só uma música pelo resto do ano, qual seria? 🎵`
+              ].map((msg, i) => (
+                <button 
+                  key={i} 
+                  className="icebreaker-btn"
+                  onClick={() => setNewMessage(msg)}
+                >
+                  {msg}
+                </button>
+              ))}
             </div>
-            <h3>Inicio da conversa</h3>
-            <p>Diga ola para {matchInfo?.name}</p>
           </div>
         )}
 
