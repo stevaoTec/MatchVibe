@@ -56,11 +56,22 @@ app.get('/api/health', (_req, res) => {
 // Serve frontend if running in production mode / locally
 const frontendPath = path.join(__dirname, '../../client/dist');
 if (fs.existsSync(frontendPath)) {
-  app.use(express.static(frontendPath));
+  app.use(express.static(frontendPath, {
+    setHeaders: (res, filePath) => {
+      if (filePath.endsWith('.html') || filePath.endsWith('sw.js') || filePath.endsWith('manifest.json')) {
+        // Nunca fazer cache do HTML e do Service Worker (evita tela branca)
+        res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      } else {
+        // Fazer cache longo das imagens, js e css (deixa o site super rápido)
+        res.setHeader('Cache-Control', 'public, max-age=31536000');
+      }
+    }
+  }));
   
   app.get('*', (req, res) => {
     // Only catch non-api routes
     if (!req.path.startsWith('/api') && !req.path.startsWith('/uploads')) {
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
       res.sendFile(path.join(frontendPath, 'index.html'));
     }
   });
