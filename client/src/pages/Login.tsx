@@ -107,10 +107,6 @@ export default function Login() {
         <p className="auth-switch">
           Nao tem conta? <Link to="/register">Criar conta</Link>
         </p>
-        <div className="auth-demo">
-          <p>Demo: qualquer email dos usuarios abaixo com senha <strong>123456</strong></p>
-          <small>ana@demo.com | lucas@demo.com | maria@demo.com</small>
-        </div>
       </div>
     </div>
   );
